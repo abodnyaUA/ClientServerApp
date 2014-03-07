@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="utf-8">
+  <title>Галерея</title>
+  <link href="style/animate.css" rel="stylesheet">
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+  <script>
+   $(document).ready(function() {
+    $('img.animated').hover(
+     function() {
+      $(this).addClass('bounce'); // Добавляем класс bounce
+     },
+     function() {
+      $(this).removeClass('bounce'); // Убираем класс
+     }
+    )})
+  </script>
+ </head>
+ <body>
+   <img src="images/thumb1.jpg" alt="" class="animated">
+   <img src="images/thumb2.jpg" alt="" class="animated">
+   <img src="images/thumb3.jpg" alt="" class="animated">
+ </body>
+</html>

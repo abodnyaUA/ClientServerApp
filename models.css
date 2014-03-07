@@ -1,0 +1,62 @@
+body
+{
+	background: #333; /* Цвет фона */
+}
+
+table 
+{
+	left: 0em;
+	border-collapse: collapse;
+	width: 100%;
+	height: 100%;
+}
+td 
+{
+	background: #F7F7F7;
+	border: 1px solid #DDD;
+	min-width: 120px;
+	padding: 5px;
+}
+#bar 
+{
+	top: 0em;
+	background: rgba(33,33,33,0.95); /* Цвет фона */
+	left:-15em; /* Положение */
+	padding-left: 1em; /* Поля */
+	padding-right: 1em; /* Поля */
+	margin: 0; /* Отступы */
+	position: absolute; /* Абсолютное позиционирование */
+	width: 12em; /* Ширина */
+	color: #fff; /* Цвет текста */
+	text-align: left; /* Выравнивание по центру */
+	height: 100%;
+	border-right: 3px solid #344;
+	/* Переход */
+	-webkit-transition: all 0.5s ease-in-out;
+	-moz-transition: all 0.5s ease-in-out;
+	-o-transition: all 0.5s ease-in-out;
+	transition: all 0.5s ease-in-out;
+}
+
+input[type="button"]
+{
+	background-color:#dfdfdf;
+	left: 0em;
+}
+
+input.addPanelButton
+{
+	width: 48.5%;
+}
+
+input[type="text"] 
+{
+	width: 100%;
+	border: 1px solid #CCC;
+}
+
+input[type="number"] 
+{
+	width: 100%;
+	border: 1px solid #CCC;
+}
