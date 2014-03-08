@@ -56,6 +56,7 @@ class DBController
     	try
     	{
     		$this->databaseConnector = new PDO($dsn, $user, $password);
+    		$this->databaseConnector->query("SET NAMES 'utf8'");
     	}
     	catch (PDOException $e)
     	{
