@@ -7,9 +7,7 @@
  * price - model's price
  * name - model's name
  * count - Count of models incoming on warehouse
- * archived - YES or NO
- * Response:
- * Models on warehouse.
+ * archived - If equals "1", new model is temporary invalid for new purchases
  */
 
 include_once "../Database/DBController.php";
@@ -18,7 +16,7 @@ $price = $_GET["price"];
 $count = $_GET["count"];
 $name = $_GET["name"];
 $archived = $_GET["archived"];
-$models = "";
+
 if (!empty($price) && !empty($name) && !empty($count) && 
 		(!empty($archived) || 0 == $archived))
 {

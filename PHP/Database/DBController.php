@@ -3,6 +3,7 @@
 include_once "../ServerAPI/JSON.php";
 include_once "../Database/DBFetchController.php";
 include_once "../Database/DBInsertController.php";
+include_once "../Database/DBUpdateController.php";
 
 class DBController 
 {
@@ -10,6 +11,7 @@ class DBController
     
     public $fetch;
     public $insert;
+    public $update;
     
 	/*************** Base Init *****************/
 	
@@ -32,12 +34,18 @@ class DBController
     {
     	$this->fetch = DBFetchController::createController();
     	$this->insert = new DBInsertController();
+    	$this->update = new DBUpdateController();
     }
     
     /*************** General Methods *****************/
     
     private $databaseConnector;
     
+    /**
+     * Connect to Database with user and password
+     * @param String $user
+     * @param String $password
+     */
     public function configure($user, $password)
     {
     	$databaseName = 'db_management';
@@ -55,40 +63,47 @@ class DBController
     	}
     }
     
+    /**
+     * Execute MySQL request. 
+     * Use "prepare" method for security.
+     * @param String $command
+     * @param Array $parameters
+     * Request parameters in Key-Value Array format
+     * @return MySQL Response in PHP Key-Value Array format
+     */
     public function execute($command, $parameters)
     {
     	$result = $this->databaseConnector->prepare($command);
     	$result->setFetchMode(PDO::FETCH_ASSOC);
     	$result->execute($parameters);
+    	$entries = $result->fetchAll();
 //     	var_dump($parameters);
 //     	var_dump($result);
-    	return $result;
+// 		var_dump($entries);
+    	return $entries;
     }
     
+    /**
+     * Execute MySQL request.
+     * Use "bindValue" method for security.
+     * @param String $command
+     * @param Array $parameters
+     * Request parameters in Key-Value Array format
+     * @return MySQL Response in PHP Key-Value Array format
+     */
     public function executeWithBindParameters($command, $parameters)
     {
-    	$result = $this->databaseConnector->query($command);
-    	$result->setFetchMode(PDO::FETCH_ASSOC);
-    	return $result;
-    }
-    
-    /*************** Additional Methods *****************/
-    
-    public function PHPArrayFromDBArray($dbArray)
-    {
-    	$entries = array();
-    	while ($entry = $dbArray->fetch())
+    	$result = $this->databaseConnector->prepare($command);
+    	foreach ($parameters as $key => $value)
     	{
-    		foreach ($entry as $key=>$value)
-    		{
-    			// Remove fake entry
-    			if (is_numeric($key))
-    			{
-    				unset($entry[$key]);
-    			}
-    		}
-    		array_push($entries, $entry);
+    		$result->bindValue(($key+1), $value);
     	}
+    	$result->setFetchMode(PDO::FETCH_ASSOC);
+    	$result->execute();
+    	$entries = $result->fetchAll();
+//     	var_dump($parameters);
+//     	var_dump($result);
+// 		var_dump($entries);
     	return $entries;
     }
 }

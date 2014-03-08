@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Server API.
  * Request "Recievers".
  * Type: GET.
@@ -9,10 +9,21 @@
  * Recievers in recievers' list.
  */
 
-include "../Database/database_fetch_reciever.php";
+include_once "../Database/DBController.php";
+include_once "../ServerAPI/JSON.php";
 
-
-$recievers = allRecievers();
-echo json_encode($recievers);
+$recieverDate = $_GET["reciever_date"];
+$recievers = "";
+if (!empty($orderDate))
+{
+	$predicate = "recieverUpdateDate > :recieverDate";
+	$parameters = array ("recieverUpdateDate" => $recieverDate);
+	$recievers = DBController::sharedController()->fetch->reciever->withPredicate($predicate, $parameters);
+}
+else
+{
+	$recievers = DBController::sharedController()->fetch->reciever->all();
+}
+echo sendSuccessResponse($recievers);
 
 ?>

@@ -9,8 +9,6 @@
  * Models on warehouse.
  */
 
-//include "../Database/database_fetch_model.php";
-
 include_once "../Database/DBController.php";
 include_once "../ServerAPI/JSON.php";
 
@@ -19,12 +17,12 @@ $models = "";
 if (!empty($creationDate))
 {
 	$predicate = "model_creationDate > :creationDate";
-	$models = DBController::sharedController()->fetch->model->
-		modelsOnWarehouseWithPredicate($predicate,array ("creationDate" => $creationDate));
+	$parameters = array ("creationDate" => $creationDate);
+	$models = DBController::sharedController()->fetch->model->withPredicate($predicate,$parameters);
 }
 else
 {
-	$models = DBController::sharedController()->fetch->model->allModelsOnWarehouse();
+	$models = DBController::sharedController()->fetch->model->all();
 }
 echo sendSuccessResponse($models);
 

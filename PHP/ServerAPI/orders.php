@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Server API.
  * Request "Orders".
  * Type: GET.
@@ -9,18 +9,21 @@
  * All Orders.
  */
 
-include "../Database/database_fetch_order.php";
+include_once "../Database/DBController.php";
+include_once "../ServerAPI/JSON.php";
 
 $orderDate = $_GET["order_date"];
 $orders = "";
 if (!empty($orderDate))
 {
-	$orders = ordersWithPredicate("orderDate > '".$orderDate."'");
+	$predicate = "orderDate > ?";
+	$parameters = array ($orderDate);
+	$orders = DBController::sharedController()->fetch->order->withPredicate($predicate,$parameters);
 }
 else
 {
-	$orders = allOrders();
+	$orders = DBController::sharedController()->fetch->order->all();
 }
-echo json_encode($orders);
+echo sendSuccessResponse($orders);
 
 ?>
