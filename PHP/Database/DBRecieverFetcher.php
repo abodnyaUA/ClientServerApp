@@ -14,7 +14,7 @@ class DBRecieverFetcher
 	 */
 	public function withPredicate($predicate, $parameters)
 	{
-		$command = "SELECT * FROM `Reciever` WHERE ".$predicate;
+		$command = "SELECT * FROM `".databaseName()."`.`Reciever` WHERE ".$predicate;
 		$entries = DBController::sharedController()->execute($command, $parameters);
 	 	return $entries;
 	}

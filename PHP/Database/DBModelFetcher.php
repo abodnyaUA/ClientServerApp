@@ -14,7 +14,9 @@ class DBModelFetcher
 	 */
 	public function withPredicate($predicate, $parameters)
 	{
-		$command = "SELECT * FROM `Model`,`Warehouse` WHERE `Warehouse`.modelID = `Model`.modelID and ".$predicate;
+		$command = "SELECT * FROM `".databaseName()."`.`Model`,
+								  `".databaseName()."`.`Warehouse` WHERE 
+			`Warehouse`.modelID = `Model`.modelID and ".$predicate;
 		$entries = DBController::sharedController()->execute($command, $parameters);
 	 	return $entries;
 	}

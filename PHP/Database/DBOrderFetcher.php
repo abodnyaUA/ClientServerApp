@@ -14,7 +14,9 @@ class DBOrderFetcher
 	 */
 	public function withPredicate($predicate, $parameters)
 	{
-		$command = "SELECT * FROM `Model`,`Order`,`ModelOrder` WHERE
+		$command = "SELECT * FROM `".databaseName()."`.`Model`,
+								  `".databaseName()."`.`Order`,
+								  `".databaseName()."`.`ModelOrder` WHERE
 					`ModelOrder`.modelID = `Model`.modelID AND
 					`ModelOrder`.orderID = `Order`.orderID AND ".$predicate;
 		$entries = DBController::sharedController()->executeWithBindParameters($command, $parameters);

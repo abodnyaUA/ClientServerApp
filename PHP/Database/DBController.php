@@ -4,6 +4,7 @@ include_once "../ServerAPI/JSON.php";
 include_once "../Database/DBFetchController.php";
 include_once "../Database/DBInsertController.php";
 include_once "../Database/DBUpdateController.php";
+include_once "../Base/Environment.php";
 
 class DBController 
 {
@@ -48,8 +49,8 @@ class DBController
      */
     public function configure($user, $password)
     {
-    	$databaseName = 'db_management';
-    	$host = '127.0.0.1';
+    	$databaseName = databaseName();
+    	$host = host();
     	$dsn = 'mysql:dbname='.$databaseName.';host='.$host;
     	
     	try

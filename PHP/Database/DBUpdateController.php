@@ -9,7 +9,7 @@ class DBUpdateController
 		//TODO
 	}
 	
-	public function modelToWarehouse($modelID, $name, $count, $price, $archived)
+	public function model($modelID, $name, $count, $price, $archived)
 	{
 		//TODO
 	}

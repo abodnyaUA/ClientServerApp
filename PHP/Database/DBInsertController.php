@@ -35,7 +35,8 @@ class DBInsertController
 		$archived = abs(intval($archived) % 2);
 		
 		// Insert new value //
-		$command = "INSERT INTO `db_management`.`Model` (`model_archived`, `modelID`, `name`, `price`, `model_creationDate`) ".
+		$command = "INSERT INTO `".databaseName()."`.`Model` 
+			(`model_archived`, `modelID`, `name`, `price`, `model_creationDate`) ".
 				   "VALUES (:archived, NULL, :name, :price, CURRENT_TIMESTAMP);";
 		$parameters = array ("archived" => $archived,"name" => $name,"price" => $price);
 		
@@ -45,7 +46,8 @@ class DBInsertController
 		$modelID = $this->lastInsertID();
 		
 		// Confirm with Warehouse //
-		$command = "INSERT INTO  `db_management`.`Warehouse` (`count`, `modelID`) VALUES (:count, :modelID);";
+		$command = "INSERT INTO  `".databaseName()."`.`Warehouse` 
+			(`count`, `modelID`) VALUES (:count, :modelID);";
 		$parameters = array ("count" => $count, "modelID" => $modelID);
 		
 		DBController::sharedController()->execute($command, $parameters);
@@ -70,7 +72,8 @@ class DBInsertController
 		$archived = abs(intval($archived) % 2);
 	
 		// Insert new value //
-		$command = "INSERT INTO `db_management`.`Reciever` (`account`, `adress`, `reciever_archived`, 
+		$command = "INSERT INTO `".databaseName()."`.`Reciever` 
+			(`account`, `adress`, `reciever_archived`,
 			`recieverID`, `name`, `phone`, `recieverUpdateDate`) ".
 			"VALUES (:account, :adress, :archived, NULL, :name, :phone, CURRENT_TIMESTAMP);";
 		$parameters = array ("archived" => $archived,"name" => $name,"phone" => $phone,
