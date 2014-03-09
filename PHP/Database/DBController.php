@@ -4,7 +4,10 @@ include_once "../ServerAPI/JSON.php";
 include_once "../Database/DBFetchController.php";
 include_once "../Database/DBInsertController.php";
 include_once "../Database/DBUpdateController.php";
+include_once "../Database/DBRemoveController.php";
+include_once "../Database/DBArchivateController.php";
 include_once "../Base/Environment.php";
+include_once "../Base/Log.php";
 
 class DBController 
 {
@@ -13,6 +16,8 @@ class DBController
     public $fetch;
     public $insert;
     public $update;
+    public $remove;
+    public $archivate;
     
 	/*************** Base Init *****************/
 	
@@ -36,6 +41,8 @@ class DBController
     	$this->fetch = DBFetchController::createController();
     	$this->insert = new DBInsertController();
     	$this->update = new DBUpdateController();
+    	$this->remove = new DBRemoveController();
+    	$this->archivate = new DBArchivateController();
     }
     
     /*************** General Methods *****************/
@@ -79,9 +86,9 @@ class DBController
     	$result->setFetchMode(PDO::FETCH_ASSOC);
     	$result->execute($parameters);
     	$entries = $result->fetchAll();
-//     	var_dump($parameters);
-//     	var_dump($result);
-// 		var_dump($entries);
+    	logObject("Request Parameters", $parameters);
+    	logObject("Request Result", $result);
+    	logObject("Request Entries", $entries);
     	return $entries;
     }
     
@@ -103,9 +110,19 @@ class DBController
     	$result->setFetchMode(PDO::FETCH_ASSOC);
     	$result->execute();
     	$entries = $result->fetchAll();
-//     	var_dump($parameters);
-//     	var_dump($result);
-// 		var_dump($entries);
+    	logObject("Request Parameters", $parameters);
+    	logObject("Request Result", $result);
+    	logObject("Request Entries", $entries);
+    	return $entries;
+    }
+    
+    public function executeWithoutParameters($command)
+    {
+    	$result = $this->databaseConnector->query($command);
+    	$result->setFetchMode(PDO::FETCH_ASSOC);
+    	$entries = $result->fetchAll();
+    	logObject("Request Result", $result);
+    	logObject("Request Entries", $entries);
     	return $entries;
     }
 }

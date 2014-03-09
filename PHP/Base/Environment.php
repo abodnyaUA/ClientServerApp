@@ -2,7 +2,7 @@
 
 function host() 
 {
-	return $_SERVER[SERVER_ADDR];
+	return $_SERVER["SERVER_ADDR"];
 }
 
 function databaseName()

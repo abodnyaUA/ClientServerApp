@@ -16,8 +16,8 @@ $orderDate = $_GET["order_date"];
 $orders = "";
 if (!empty($orderDate))
 {
-	$predicate = "orderDate > ?";
-	$parameters = array ($orderDate);
+	$predicate = "orderDate > :orderDate";
+	$parameters = array ("orderDate" => $orderDate);
 	$orders = DBController::sharedController()->fetch->order->withPredicate($predicate,$parameters);
 }
 else
