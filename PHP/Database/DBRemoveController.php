@@ -18,19 +18,9 @@ class DBRemoveController
 		// Validate Data //
 		$modelID = intval($modelID);
 		$orderID = intval($orderID);
-		
-		$order = DBController::sharedController()->fetch->order->withID($orderID);
-		if (0 === $order["order_archived"])
-		{
-			$countModelsInOrder = $order["count"];
-			
-			$model = DBController::sharedController()->fetch->model->withID($modelID);
-			$countModelsOnWarehouse = $model["count"];
-			// Return models to warehouse if order is active
-			$newCountOnWarehouse = $countModelsOnWarehouse + $countModelsInOrder;
-			DBController::sharedController()->update->
-				model($modelID, $model["name"], $newCountOnWarehouse, $model["price"], $model["archived"]);
-		}
+
+		// Trigger `move_models_from_order_to_warehouse` will back all models to warehouse
+		// if order is active. 
 		
 		$params = array("orderID");
 		$command = "DELETE FROM `".databaseName()."`.`ModelOrder` WHERE `ModelOrder`.`orderID` = :orderID";

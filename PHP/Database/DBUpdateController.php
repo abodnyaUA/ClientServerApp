@@ -64,11 +64,40 @@ class DBUpdateController
 		$orderID = intval($orderID);
 		$count = intval($count);
 		
-		$command = "UPDATE `".databaseName()."`.`ModelOrder` SET `count`=:count WHERE 
-					`modelID` = :modelID and `orderID` = :orderID";
-		$parameters = array("modelID" => $modelID, "orderID" => $orderID, "count" => $count);
 		
-		DBController::sharedController()->execute($command, $parameters);
+		// Check count on Warehouse
+		$modelOnWarehouse = DBController::sharedController()->fetch->model->withID($modelID);
+		logSimpleLine();
+		
+		$countOnWarehouse = $modelOnWarehouse["count"];
+		logObject("Count on warehouse", $countOnWarehouse);
+		
+		// Check count in Order
+		$modelInOrder = DBController::sharedController()->fetch->order->withModelAndOrderID($modelID, $orderID);
+		$countInOrder = $modelInOrder["count"];
+		logObject("Count in order", $modelInOrder);
+		
+		$summaryCount = $countInOrder + $countOnWarehouse;
+		
+		logObject("Summary exist count", $summaryCount);
+		logObject("Count to purchase", $count);
+		
+		if ($summaryCount >= $count)
+		{
+			logLine("There are enough models to purchase");
+			// Insert new value //
+			$command = "UPDATE `".databaseName()."`.`ModelOrder` SET `count`=:count WHERE 
+						`modelID` = :modelID and `orderID` = :orderID";
+			$parameters = array("modelID" => $modelID, "orderID" => $orderID, "count" => $count);
+			
+			DBController::sharedController()->execute($command, $parameters);
+			
+			// Triger `update_models_count_in_order` will recalculate new models' count on warehouse
+		}
+		else
+		{
+			logLine("There aren't enough models to purchase");				
+		}
 	}
 	
 	public function order($orderID, $archived, $recieverID)

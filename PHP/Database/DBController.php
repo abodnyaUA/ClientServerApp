@@ -6,6 +6,7 @@ include_once "../Database/DBInsertController.php";
 include_once "../Database/DBUpdateController.php";
 include_once "../Database/DBRemoveController.php";
 include_once "../Database/DBArchivateController.php";
+include_once "../Database/DBTriggersController.php";
 include_once "../Base/Environment.php";
 include_once "../Base/Log.php";
 
@@ -64,6 +65,7 @@ class DBController
     	{
     		$this->databaseConnector = new PDO($dsn, $user, $password);
     		$this->databaseConnector->query("SET NAMES 'utf8'");
+    		DBTriggersController::setupTrigers();
     	}
     	catch (PDOException $e)
     	{
@@ -116,6 +118,12 @@ class DBController
     	return $entries;
     }
     
+    /**
+     * Execute MySQL request.
+     * Execute single request without parameters
+     * @param String $command
+     * @return MySQL Response in PHP Key-Value Array format
+     */
     public function executeWithoutParameters($command)
     {
     	$result = $this->databaseConnector->query($command);
@@ -124,6 +132,15 @@ class DBController
     	logObject("Request Result", $result);
     	logObject("Request Entries", $entries);
     	return $entries;
+    }
+    
+    /**
+     * Execute MySQL request without parsing and returning
+     * @param String $command
+     */
+    public function executeSimpleCommand($command)
+    {
+    	$this->databaseConnector->query($command);
     }
 }
 ?>

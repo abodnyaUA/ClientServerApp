@@ -75,7 +75,7 @@ class DBInsertController
 		
 		$countOnWarehouse = $model["count"];
 		logObject("Count on warehouse", $countOnWarehouse);
-		logObject("Count to purchas", $count);
+		logObject("Count to purchase", $count);
 		
 		if ($countOnWarehouse >= $count)
 		{
@@ -86,20 +86,8 @@ class DBInsertController
 			"VALUES (NULL, :modelID, :orderID, :count);";
 			$parameters = array ("modelID" => $modelID,"orderID" => $orderID,"count" => $count);
 			DBController::sharedController()->execute($command, $parameters);
-			logSimpleLine();
 			
-			// Update time in Order //
-			$command = "UPDATE  `".databaseName()."`.`Order` SET
-			`orderDate` = CURRENT_TIMESTAMP WHERE  `Order`.`orderID` =:orderID";
-			$parameters = array ("orderID" => $orderID);
-			DBController::sharedController()->execute($command, $parameters);
-			logSimpleLine();
-			
-			// Decrement count on Warehouse
-			$newCountOnWarehouse = $countOnWarehouse - $count;
-			logObject("Models leaves on warehouse", $newCountOnWarehouse);
-			DBController::sharedController()->update->
-				model($modelID, $model["model_name"], $newCountOnWarehouse, $model["price"], $model["archived"]);
+			// Trigger `move_models_from_warehouse_to_order` will move models from warehouse to order
 		}
 		else
 		{
