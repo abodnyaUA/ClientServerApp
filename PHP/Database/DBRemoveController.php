@@ -22,35 +22,33 @@ class DBRemoveController
 		// Trigger `move_models_from_order_to_warehouse` will back all models to warehouse
 		// if order is active. 
 		
-		$params = array("orderID");
-		$command = "DELETE FROM `".databaseName()."`.`ModelOrder` WHERE `ModelOrder`.`orderID` = :orderID";
+		$parameters = array("orderID" => $orderID, "modelID" => $modelID);
+		$command = "DELETE FROM `".databaseName()."`.`ModelOrder` 
+					WHERE `ModelOrder`.`orderID` = :orderID and `ModelOrder`.`modelID` = :modelID";
 		DBController::sharedController()->execute($command, $parameters);
 	}
 	
 	/**
-	 * Remove model from warehouse
+	 * Remove model from warehouse and from all orders
 	 * @param Integer $modelID
-	 * @param TinyInt $hardRemove
-	 * If YES, Remove also all connections (orders with this model)
 	 */
-	public function modelFromWarehouse($modelID, $hardRemove)
+	public function modelFromWarehouse($modelID)
 	{
 		// Validate Data //
 		$modelID = intval($modelID);
-		$hardRemove = abs(intval($hardRemove) % 2);
+		$parameters = array("modelID" => $modelID);
+		
+		$command = "DELETE FROM `".databaseName()."`.`ModelOrder` WHERE `ModelOrder`.`modelID` = :modelID";
+		DBController::sharedController()->execute($command, $parameters);
+		logSimpleLine();
 		
 		$command = "DELETE FROM `".databaseName()."`.`Warehouse` WHERE `Warehouse`.`modelID` = :modelID";
-		$params = array("modelID");
-		DBController::sharedController()->execute($command, $parameters);
-		
-		if (1 === $hardRemove)
-		{
-			$command = "DELETE FROM `".databaseName()."`.`ModelOrder` WHERE `ModelOrder`.`modelID` = :modelID";
-			DBController::sharedController()->execute($command, $parameters);			
-		}
+		DBController::sharedController()->execute($command, $parameters);	
+		logSimpleLine();		
 		
 		$command = "DELETE FROM `".databaseName()."`.`Model` WHERE `Model`.`modelID` = :modelID";
 		DBController::sharedController()->execute($command, $parameters);
+		logSimpleLine();
 	}
 	
 	/**
@@ -63,10 +61,13 @@ class DBRemoveController
 		$orderID = intval($orderID);
 		
 		$orders = DBController::sharedController()->fetch->order->withID($orderID);
+		logSimpleLine();
+		logDump("Models with order", $orders);
 		foreach ($orders as $order) 
 		{
 			$modelID = $order["modelID"];
-			$this->modelFromOrder($modelID, $orderID);				
+			$this->modelFromOrder($modelID, $orderID);	
+			logSimpleLine();			
 		}
 		
 		$command = "DELETE FROM `".databaseName()."`.`Order` WHERE `Order`.`orderID` = :orderID";
@@ -75,27 +76,24 @@ class DBRemoveController
 	}
 	
 	/**
-	 * Remove Reciever
+	 * Remove Reciever from database (include all orders)
 	 * @param Integer $recieverID
-	 * @param TinyInt $hardRemove
-	 * If YES, Remove also all connections (orders with this model)
 	 */
-	public function reciever($recieverID, $hardRemove)
+	public function reciever($recieverID)
 	{
 		// Validate Data //
-		$modelID = intval($modelID);
-		$hardRemove = abs(intval($hardRemove) % 2);
+		$recieverID = intval($recieverID);
 		
 		$parameters = array ("recieverID" => $recieverID);
 		
-		if (1 === $hardRemove)
+		$orders = DBController::sharedController()->fetch->order->withReciever($recieverID);
+		logSimpleLine();
+		foreach ($orders as $order) 
 		{
-			$orders = DBController::sharedController()->fetch->order->withReciever($recieverID);
-			foreach ($orders as $order) 
-			{
-				$orderID = $order["orderID"];
-				$this->order($orderID);
-			}
+			$orderID = $order["orderID"];
+			logDump("OrderID with reciever", $orderID);
+			$this->order($orderID);
+			logSimpleLine();
 		}
 		
 		$command = "DELETE FROM `".databaseName()."`.`Reciever` WHERE 

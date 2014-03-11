@@ -1,15 +1,16 @@
 <?php
 
-include_once "../Database/DBController.php";
+include_once "../Configurator/DBConfigurator.php";
 
-class DBTriggersController 
+class DBTriggersConfigurator
 {
 	public static function setupTrigers()
 	{
-		$triggersController = new DBTriggersController();
-		$triggersController->setupTrigerMoveModelsFromOrderToWarehouse();
-		$triggersController->setupTrigerMoveModelsFromWarehouseToOrder();
-		$triggersController->setupTrigerUpdateModelsCountInOrder();
+		$triggersConfigurator = new DBTriggersConfigurator();
+		$triggersConfigurator->setupTrigerMoveModelsFromOrderToWarehouse();
+		$triggersConfigurator->setupTrigerMoveModelsFromWarehouseToOrder();
+		$triggersConfigurator->setupTrigerUpdateModelsCountInOrder();
+		$triggersConfigurator->setupTrigerRemoveOrderWithoutModels();
 	}
 	
 	public function setupTrigerMoveModelsFromWarehouseToOrder()
@@ -28,7 +29,9 @@ class DBTriggersController
 		`Warehouse`.count = `Warehouse`.`count` - NEW.`count`
 		WHERE `Warehouse`.`modelID` = NEW.`modelID`;
 			
-		END";
+		END
+		//
+		DELIMITER ;";
 		DBController::sharedController()->executeSimpleCommand($command);
 	}
 	
@@ -49,12 +52,14 @@ class DBTriggersController
 		WHERE `".databaseName()."`.`Order`.orderID = OLD.orderID);
 	
 		IF existOrderArchived = 0 THEN
-		UPDATE `db_management`.`Warehouse`
+		UPDATE `".databaseName()."`.`Warehouse`
 		SET  `Warehouse`.count = `Warehouse`.`count` + OLD.`count`
 		WHERE `Warehouse`.`modelID` = OLD.`modelID`;
 		END IF;
 	
-		END";
+		END
+		//
+		DELIMITER ;";
 		DBController::sharedController()->executeSimpleCommand($command);
 	}
 	
@@ -80,10 +85,36 @@ class DBTriggersController
 		SET summaryModels = modelsOnWarehouse + modelsWasInOrder;
 		SET newOnWarehouse = summaryModels - NEW.`count`;
 	
-		UPDATE `db_management`.`Warehouse`
-		SET  `Warehouse`.count =newOnWarehouse
+		UPDATE `".databaseName()."`.`Warehouse`
+		SET  `Warehouse`.count = newOnWarehouse
 		WHERE `Warehouse`.`modelID` = OLD.`modelID`;
 	
+		END
+		//
+		DELIMITER ;";
+		DBController::sharedController()->executeSimpleCommand($command);
+	}
+	
+	public function setupTrigerRemoveOrderWithoutModels()
+	{
+		$command = "DROP TRIGGER IF EXISTS `remove_empty_order`;";
+		DBController::sharedController()->executeSimpleCommand($command);
+		
+		$command = "
+		DELIMITER //
+		CREATE TRIGGER `remove_empty_order` AFTER DELETE ON 
+		`".databaseName()."`.`ModelOrder`
+		FOR EACH ROW
+		BEGIN
+		
+		DECLARE ordersCount int(11);
+		SET ordersCount = (SELECT COUNT(*) FROM `".databaseName()."`.`ModelOrder` 
+		WHERE `".databaseName()."`.`ModelOrder`.orderID = OLD.orderID);
+		
+		IF ordersCount = 0 THEN
+		DELETE FROM `".databaseName()."`.`Order` WHERE `Order`.`orderID` = OLD.orderID;
+		END IF;
+		
 		END";
 		DBController::sharedController()->executeSimpleCommand($command);
 	}

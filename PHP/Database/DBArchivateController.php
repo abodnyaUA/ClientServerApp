@@ -9,26 +9,25 @@ class DBArchivateController
 		// Validate data
 		$modelID = intval($modelID);
 		
-		$model = DBController::sharedController()->fetch->model->withID($modelID);
-		if (0 === $model["model_archived"])
-		{
-			DBController::sharedController()->update->model
-			($modelID, $model["name"], $model["count"], $model["price"], 1);
-		}
+		$command = "UPDATE  `".databaseName()."`.`Model` SET 
+				`model_archived` = 1
+				WHERE  `Model`.`modelID` = :modelID;";
+		$parameters = array("modelID" => $modelID);
+		DBController::sharedController()->execute($command, $parameters);
 	}
 	
 	public function reciever($recieverID) 
 	{
 		// Validate data
 		$recieverID = intval($recieverID);
+					
+		$command = "UPDATE  `".databaseName()."`.`Reciever` SET
+		`reciever_archived` = 1,
+		`recieverUpdateDate` = CURRENT_TIMESTAMP
+		WHERE  `Reciever`.`recieverID` = :recieverID;";
+		$parameters = array ("recieverID" => $recieverID);
 		
-		$reciever = DBController::sharedController()->fetch->reciever->withID($recieverID);
-		if (0 === $reciever["reciever_archived"])
-		{
-			DBController::sharedController()->update->reciever
-			($recieverID, $reciever["name"], $reciever["adress"], 
-				$reciever["phone"], $reciever["account"], 1);
-		}
+		DBController::sharedController()->execute($command, $parameters);
 	}
 	
 	public function order($orderID) 
@@ -36,11 +35,12 @@ class DBArchivateController
 		// Validate data
 		$orderID = intval($orderID);
 		
-		$order = DBController::sharedController()->fetch->order->withID($orderID);
-		if (0 === $order["order_archived"])
-		{
-			DBController::sharedController()->update->order($orderID, 1, $order["recieverID"]);
-		}
+		$command = "UPDATE  `".databaseName()."`.`Order` SET  
+					`order_archived` =  1,
+					`orderDate` = CURRENT_TIMESTAMP
+					WHERE  `Order`.`orderID` = :orderID ;";
+		$parameters = array("orderID" => $orderID);
+		DBController::sharedController()->execute($command, $parameters);
 	}
 }
 

@@ -4,7 +4,7 @@
  * Request "Model".
  * Type: GET.
  * Parameters:
- * creation_date - date of creation entry in DB. If it's empty, return all models
+ * update_date - date of creation entry in DB. If it's empty, return all models
  * Response:
  * Models on warehouse.
  */
@@ -12,12 +12,12 @@
 include_once "../Database/DBController.php";
 include_once "../ServerAPI/JSON.php";
 
-$creationDate = $_GET["creation_date"];
+$updateDate = $_GET["update_date"];
 $models = "";
-if (!empty($creationDate))
+if (!empty($updateDate))
 {
-	$predicate = "model_creationDate > :creationDate";
-	$parameters = array ("creationDate" => $creationDate);
+	$predicate = "model_updateDate > :updateDate";
+	$parameters = array ("updateDate" => $updateDate);
 	$models = DBController::sharedController()->fetch->model->withPredicate($predicate,$parameters);
 }
 else

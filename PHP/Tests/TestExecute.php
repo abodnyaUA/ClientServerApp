@@ -26,6 +26,7 @@ logSeparateLine();
 logLine("Execute simple request (without parameters and security)");
 logSeparateLine();
 $command = "SELECT CURRENT_USER()";
+// $command = "EXPLAIN SELECT * FROM `ModelOrder` WHERE `ModelOrder`.orderID = 3";
 $result = DBController::sharedController()->executeWithoutParameters($command);
 logObject("Request Result", $result);
 

@@ -5,23 +5,22 @@ include_once "../Base/Log.php";
 
 enableDebugMode(1);
 setReturnCharacter("<br>");
-insertModel();
-insertReciever();
+// insertModel();
+// insertReciever();
 insertModelToOrder();
+// insertOrder();
 
 function insertModel()
 {
 	logSeparateLine();
-	$name = "Crimea";
+	$name = "Car";
 	$count = 78;
 	$price = 55;
 	$archived = 0;
 	logLine("Insert model with name: ".$name."; count: ".$count."; price: ".$price."; archived: ".$archived);
 	logSeparateLine();
-	$result = DBController::sharedController()->insert->modelToWarehouse($name, $count, $price, $archived);
+	$modelID = DBController::sharedController()->insert->modelToWarehouse($name, $count, $price, $archived);
 // 	logObject("Insert Result", $result);
-	logSimpleLine();
-	$modelID = DBController::sharedController()->insert->lastInsertID();
 	logSimpleLine();
 	$result = DBController::sharedController()->fetch->model->withID($modelID);
 // 	logObject("Fetch Result", $result);
@@ -42,13 +41,10 @@ function insertReciever()
 	logLine("Insert reciever with name: ".$name."; adress: ".$adress.
 		"; phone: ".$phone."; account: ".$account."; archived: ".$archived);
 	logSeparateLine();
-	$result = DBController::sharedController()->insert->reciever($name, $adress, $phone, $account, $archived);
-// 	logObject("Insert Result", $result);
+	$recieverID = DBController::sharedController()->insert->
+		reciever($name, $adress, $phone, $account, $archived);
 	logSimpleLine();
-	$modelID = DBController::sharedController()->insert->lastInsertID();
-	logSimpleLine();
-	$result = DBController::sharedController()->fetch->reciever->withID($modelID);
-// 	logObject("Fetch Result", $result);
+	$result = DBController::sharedController()->fetch->reciever->withID($recieverID);
 	
 	logEmptyLine();
 	
@@ -59,8 +55,8 @@ function insertModelToOrder()
 {
 	logSeparateLine();
 	$orderID = 3;
-	$modelID = 90;
-	$count = 66;
+	$modelID = 1;
+	$count = 15;
 	logLine("Insert to order with ID ".$orderID." model with ID: ".$modelID." with count ".$count);
 	logSeparateLine();
 	$result = DBController::sharedController()->insert->modelToOrder($modelID, $orderID, $count);
@@ -72,6 +68,40 @@ function insertModelToOrder()
 	logEmptyLine();
 	
 	logSeparateLine();
+}
+
+function insertOrder()
+{
+	logSeparateLine();
+	$recieverID = 1;
+	$models = array ( array ("modelID" => 1, "count" => 15));
+	$archived = 0;
+	logLine("Insert order with 1 model");
+	logSeparateLine();
+	$orderID = DBController::sharedController()->insert->order($recieverID, $models, $archived);
+	// 	logObject("Insert Result", $result);
+	logSimpleLine();
+	$result = DBController::sharedController()->fetch->order->withID($orderID);
+	// 	logObject("Fetch Result", $result);
+	
+	logEmptyLine();
+	
+// 	logSeparateLine();
+// 	$recieverID = 1;
+// 	$models = array ( 
+// 			array ("modelID" => 618, "count" => 3),
+// 			array ("modelID" => 1, "count" => 1),
+// 			array ("modelID" => 1, "count" => 50));
+// 	$archived = 0;
+// 	logLine("Insert order with 3 model");
+// 	logSeparateLine();
+// 	$orderID = DBController::sharedController()->insert->order($recieverID, $models, $archived);
+// 	// 	logObject("Insert Result", $result);
+// 	logSimpleLine();
+// 	$result = DBController::sharedController()->fetch->order->withID($orderID);
+// 	// 	logObject("Fetch Result", $result);
+	
+// 	logEmptyLine();
 }
 
 ?>

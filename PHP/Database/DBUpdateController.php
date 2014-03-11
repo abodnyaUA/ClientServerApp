@@ -39,10 +39,12 @@ class DBUpdateController
 		$modelID = intval($modelID);
 		
 		$command = "UPDATE  `".databaseName()."`.`Model` SET  
-				`model_name` =  :name,
-				`price` =  :price,
+				`model_name` = :name,
+				`price` = :price,
+				`model_archived` = :archived
 				WHERE  `Model`.`modelID` = :modelID;";
-		$parameters = array("name" => $name, "price" => $price, "modelID" => $modelID);
+		$parameters = array("name" => $name, "price" => $price, 
+							 "modelID" => $modelID, "archived" => $archived);
 		
 		DBController::sharedController()->execute($command, $parameters);
 		
@@ -86,8 +88,9 @@ class DBUpdateController
 		{
 			logLine("There are enough models to purchase");
 			// Insert new value //
-			$command = "UPDATE `".databaseName()."`.`ModelOrder` SET `count`=:count WHERE 
-						`modelID` = :modelID and `orderID` = :orderID";
+			$command = "UPDATE `".databaseName()."`.`ModelOrder` SET 
+						`count`=:count 
+						WHERE `modelID` = :modelID and `orderID` = :orderID";
 			$parameters = array("modelID" => $modelID, "orderID" => $orderID, "count" => $count);
 			
 			DBController::sharedController()->execute($command, $parameters);
@@ -107,9 +110,10 @@ class DBUpdateController
 		$orderID = intval($orderID);
 		$archived = abs(intval($archived) % 2);
 		
-		$command = "UPDATE  `".databaseName()."`.`Order` SET  `order_archived` =  :archived,
+		$command = "UPDATE  `".databaseName()."`.`Order` SET  
+					`order_archived` = :archived,
 					`orderDate` = CURRENT_TIMESTAMP, 
-					`recieverID` =  ':recieverID 
+					`recieverID` =  :recieverID 
 					WHERE  `Order`.`orderID` = :orderID ;";
 		$parameters = array("recieverID" => $recieverID, 
 							 "orderID" => $orderID,

@@ -28,6 +28,7 @@ class DBOrderFetcher
 	 */
 	public function withPredicate($predicate, $parameters)
 	{
+		// Problem is: doesn't fetch orders without models //
 		$command = "SELECT * FROM `".databaseName()."`.`Model`,
 		`".databaseName()."`.`Order`,
 		`".databaseName()."`.`ModelOrder` WHERE
@@ -49,7 +50,7 @@ class DBOrderFetcher
 	public function withID($id)
 	{
 		$array = $this->withPredicate("`Order`.orderID = :orderID", array ("orderID" => $id));
-		return $array[0];
+		return $array;//count($array) > 0 ? $array[0] : null;
 	}
 
 	public function withReciever($id)
@@ -66,9 +67,9 @@ class DBOrderFetcher
 
 	public function withModelAndOrderID($modelID, $orderID)
 	{
-		$resultArray = $this->withPredicate("`Order`.orderID = :orderID and `Model`.modelID = :modelID",
+		$array = $this->withPredicate("`Order`.orderID = :orderID and `Model`.modelID = :modelID",
 			array ("orderID" => $orderID, "modelID" => $modelID));
-		return $resultArray[0];
+		return count($array) > 0 ? $array[0] : null;
 	}
 }
 
@@ -102,7 +103,7 @@ class DBModelFetcher
 	public function withID($id)
 	{
 		$array = $this->withPredicate("`Model`.modelID = :modelID", array ("modelID" => $id));
-		return $array[0];
+		return count($array) > 0 ? $array[0] : null;
 	}
 }
 
@@ -133,7 +134,8 @@ class DBRecieverFetcher
 
 	public function withID($id)
 	{
-		return $this->withPredicate("`Reciever`.recieverID = :recieverID", array ("recieverID" => $id));
+		$array = $this->withPredicate("`Reciever`.recieverID = :recieverID", array ("recieverID" => $id));
+		return count($array) > 0 ? $array[0] : null;
 	}
 }
 
