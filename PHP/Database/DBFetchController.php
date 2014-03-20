@@ -1,5 +1,10 @@
 <?php
 
+include_once "../DBEntity/DBModel.php";
+include_once "../DBEntity/DBReciever.php";
+include_once "../DBEntity/DBOrder.php.php";
+include_once "../Database/DBController.php";
+
 class DBFetchController 
 {
 	public static function createController()
@@ -34,8 +39,8 @@ class DBOrderFetcher
 		`".databaseName()."`.`ModelOrder` WHERE
 		`ModelOrder`.modelID = `Model`.modelID AND
 		`ModelOrder`.orderID = `Order`.orderID AND ".$predicate;
-		$entries = DBController::sharedController()->execute($command, $parameters);
-		return $entries;
+		$result = DBController::sharedController()->execute($command, $parameters);
+		return $result;
 	}
 
 	/**
@@ -88,8 +93,8 @@ class DBModelFetcher
 		$command = "SELECT * FROM `".databaseName()."`.`Model`,
 		`".databaseName()."`.`Warehouse` WHERE
 		`Warehouse`.modelID = `Model`.modelID and ".$predicate;
-		$entries = DBController::sharedController()->execute($command, $parameters);
-		return $entries;
+		$result = DBController::sharedController()->execute($command, $parameters);
+		return $result;
 	}
 
 	/**
@@ -102,7 +107,8 @@ class DBModelFetcher
 
 	public function withID($id)
 	{
-		$array = $this->withPredicate("`Model`.modelID = :modelID", array ("modelID" => $id));
+		$array = $this->withPredicate(
+			"`Model`.modelID = :modelID", array ("modelID" => $id))->arrayObjectsOfType("DBModel");
 		return count($array) > 0 ? $array[0] : null;
 	}
 }
@@ -120,8 +126,8 @@ class DBRecieverFetcher
 	public function withPredicate($predicate, $parameters)
 	{
 		$command = "SELECT * FROM `".databaseName()."`.`Reciever` WHERE ".$predicate;
-		$entries = DBController::sharedController()->execute($command, $parameters);
-		return $entries;
+		$result = DBController::sharedController()->execute($command, $parameters);
+		return $result;
 	}
 
 	/**
@@ -134,7 +140,9 @@ class DBRecieverFetcher
 
 	public function withID($id)
 	{
-		$array = $this->withPredicate("`Reciever`.recieverID = :recieverID", array ("recieverID" => $id));
+		$array = $this->withPredicate(
+			"`Reciever`.recieverID = :recieverID", 
+			array ("recieverID" => $id))->arrayObjectsOfType("DBReciever");
 		return count($array) > 0 ? $array[0] : null;
 	}
 }

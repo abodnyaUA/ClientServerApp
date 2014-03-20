@@ -24,6 +24,6 @@ else
 {
 	$models = DBController::sharedController()->fetch->model->all();
 }
-echo sendSuccessResponse($models);
+echo sendSuccessResponse($models->arrayPHP());
 
 ?>

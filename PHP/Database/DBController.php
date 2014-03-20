@@ -1,6 +1,7 @@
 <?php
 
 include_once "../ServerAPI/JSON.php";
+include_once "../DBEntity/DBSQLResult.php";
 include_once "../Database/DBFetchController.php";
 include_once "../Database/DBInsertController.php";
 include_once "../Database/DBUpdateController.php";
@@ -64,7 +65,6 @@ class DBController
     	{
     		$this->databaseConnector = new PDO($dsn, $user, $password);
     		$this->databaseConnector->query("SET NAMES 'utf8'");
-//     		DBTriggersController::setupTrigers();
     	}
     	catch (PDOException $e)
     	{
@@ -79,18 +79,17 @@ class DBController
      * @param String $command
      * @param Array $parameters
      * Request parameters in Key-Value Array format
-     * @return MySQL Response in PHP Key-Value Array format
+     * @return DBSQLResult : MySQL Response in PHP Key-Value Array format
      */
     public function execute($command, $parameters)
     {
     	$result = $this->databaseConnector->prepare($command);
-    	$result->setFetchMode(PDO::FETCH_ASSOC);
-    	$result->execute($parameters);
-    	$entries = $result->fetchAll();
     	logObject("Request Parameters", $parameters);
     	logObject("Request Result", $result);
-    	logObject("Request Entries", $entries);
-    	return $entries;
+    	$result = DBSQLResult::fromPDOStatement($result);
+    	$result->run($parameters); 
+    	logObject("SQL",$result->sql());
+    	return $result;
     }
     
     /**
@@ -104,17 +103,14 @@ class DBController
     public function executeWithBindParameters($command, $parameters)
     {
     	$result = $this->databaseConnector->prepare($command);
+    	$result = DBSQLResult::fromPDOStatement($result);
     	foreach ($parameters as $key => $value)
     	{
     		$result->bindValue(($key+1), $value);
     	}
-    	$result->setFetchMode(PDO::FETCH_ASSOC);
-    	$result->execute();
-    	$entries = $result->fetchAll();
-    	logObject("Request Parameters", $parameters);
-    	logObject("Request Result", $result);
-    	logObject("Request Entries", $entries);
-    	return $entries;
+    	$result->run(); 
+    	logObject("SQL",$result->sql());
+    	return $result;
     }
     
     /**
@@ -141,5 +137,17 @@ class DBController
     {
     	$this->databaseConnector->query($command);
     }
+}
+
+function SQL($command, $parameters)
+{
+	return DBController::sharedController()->execute($command, $parameters);	
+}
+
+function DSQL($command, $parameters)
+{
+	$result = DBController::sharedController()->execute($command, $parameters);	
+	echo "SQL: ".$result->sql()."<br>";
+	return $result;
 }
 ?>

@@ -77,7 +77,7 @@ class DBInsertController
 		$model = DBController::sharedController()->fetch->model->withID($modelID);
 		logSimpleLine();
 		
-		$countOnWarehouse = $model["count"];
+		$countOnWarehouse = $model->count;
 		logObject("Count on warehouse", $countOnWarehouse);
 		logObject("Count to purchase", $count);
 		

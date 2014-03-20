@@ -27,7 +27,7 @@ var entries = [];
 function addEntryToTable(entry)
 {
 	var newLine = "<tr>";
-	newLine += "<td>"+entry.name+"</td>";
+	newLine += "<td>"+entry.model_name+"</td>";
 	newLine += "<td>"+entry.price+"</td>";
 	newLine += "<td>"+entry.count+"</td>";
 	newLine += "<td>"+(entry.model_archived > 0 ? "YES" : "NO")+"</td>";
@@ -52,17 +52,7 @@ function addLastModel()
 {
 	allModels(function (entries) 
 	{
-		var lastDate = entries[0].model_creationDate;
-		var lastModelIndex = 0;
-		for (var i = 1; i < entries.length; i++) 
-		{
-			if (lastDate < entries[i].model_creationDate)
-			{
-				lastDate = entries[i].model_creationDate;
-				lastModelIndex = i;
-			}
-		};
-		addEntryToTable(entries[lastModelIndex]);
+		addEntryToTable(entries[entries.length-1]);
 	});	
 }
 
