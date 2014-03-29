@@ -11,7 +11,7 @@
  * archived - If equals "1", new reciever temporary doesn't have access for new purchases
  */
 
-include_once "../Database/DBController.php";
+include_once $_SERVER['DOCUMENT_ROOT']."/PHP/Database/DBController.php";
 
 $phone = $_GET["phone"];
 $adress = $_GET["adress"];

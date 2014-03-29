@@ -9,8 +9,8 @@
  * Recievers in recievers' list.
  */
 
-include_once "../Database/DBController.php";
-include_once "../ServerAPI/JSON.php";
+include_once $_SERVER['DOCUMENT_ROOT']."/PHP/Database/DBController.php";
+include_once $_SERVER['DOCUMENT_ROOT']."/PHP/ServerAPI/JSON.php";
 
 $recieverDate = $_GET["reciever_date"];
 $recievers = "";
@@ -24,6 +24,6 @@ else
 {
 	$recievers = DBController::sharedController()->fetch->reciever->all();
 }
-echo sendSuccessResponse($recievers);
+echo sendSuccessResponse($recievers->arrayPHP());
 
 ?>

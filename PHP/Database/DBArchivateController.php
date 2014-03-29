@@ -1,6 +1,6 @@
 <?php
 
-include_once "../Database/DBController.php";
+include_once $_SERVER['DOCUMENT_ROOT']."/PHP/Database/DBController.php";
 
 class DBArchivateController 
 {

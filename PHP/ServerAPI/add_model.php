@@ -10,7 +10,7 @@
  * archived - If equals "1", new model is temporary invalid for new purchases
  */
 
-include_once "../Database/DBController.php";
+include_once $_SERVER['DOCUMENT_ROOT']."/PHP/Database/DBController.php";
 
 $price = $_GET["price"];
 $count = $_GET["count"];

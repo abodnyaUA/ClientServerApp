@@ -1,7 +1,7 @@
 <?php
 
-include_once "../Database/DBController.php";
-include_once "../Base/Log.php";
+include_once $_SERVER['DOCUMENT_ROOT']."/PHP/Database/DBController.php";
+include_once $_SERVER['DOCUMENT_ROOT']."/PHP/Base/Log.php";
 
 enableDebugMode(1);
 setReturnCharacter("<br>");

@@ -1,13 +1,13 @@
 <?php
 
-include_once "../ServerAPI/JSON.php";
-include_once "../Base/Environment.php";
-include_once "../Base/Log.php";
-include_once "../Database/DBController.php";
-include_once "../Configurator/DBTriggersConfigurator.php";
-include_once "../Configurator/DBTablesConfigurator.php";
-include_once "../Configurator/DBConnectionsConfigurator.php";
-include_once "../Configurator/DBInsertConfigurator.php";
+include_once $_SERVER['DOCUMENT_ROOT']."/PHP/ServerAPI/JSON.php";
+include_once $_SERVER['DOCUMENT_ROOT']."/PHP/Base/Environment.php";
+include_once $_SERVER['DOCUMENT_ROOT']."/PHP/Base/Log.php";
+include_once $_SERVER['DOCUMENT_ROOT']."/PHP/Database/DBController.php";
+include_once $_SERVER['DOCUMENT_ROOT']."/PHP/Configurator/DBTriggersConfigurator.php";
+include_once $_SERVER['DOCUMENT_ROOT']."/PHP/Configurator/DBTablesConfigurator.php";
+include_once $_SERVER['DOCUMENT_ROOT']."/PHP/Configurator/DBConnectionsConfigurator.php";
+include_once $_SERVER['DOCUMENT_ROOT']."/PHP/Configurator/DBInsertConfigurator.php";
 
 class DBConfigurator 
 {

@@ -1,6 +1,6 @@
 <?php
 
-include_once "../DBEntity/DBEntity.php";
+include_once $_SERVER['DOCUMENT_ROOT']."/PHP/DBEntity/DBEntity.php";
 
 class DBOrder extends DBEntity
 {

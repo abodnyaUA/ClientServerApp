@@ -9,8 +9,8 @@
  * All Orders.
  */
 
-include_once "../Database/DBController.php";
-include_once "../ServerAPI/JSON.php";
+include_once $_SERVER['DOCUMENT_ROOT']."/PHP/Database/DBController.php";
+include_once $_SERVER['DOCUMENT_ROOT']."/PHP/ServerAPI/JSON.php";
 
 $orderDate = $_GET["order_date"];
 $orders = "";

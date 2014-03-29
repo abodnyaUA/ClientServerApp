@@ -1,14 +1,14 @@
 <?php
 
-include_once "../ServerAPI/JSON.php";
-include_once "../DBEntity/DBSQLResult.php";
-include_once "../Database/DBFetchController.php";
-include_once "../Database/DBInsertController.php";
-include_once "../Database/DBUpdateController.php";
-include_once "../Database/DBRemoveController.php";
-include_once "../Database/DBArchivateController.php";
-include_once "../Base/Environment.php";
-include_once "../Base/Log.php";
+include_once $_SERVER['DOCUMENT_ROOT']."/PHP/ServerAPI/JSON.php";
+include_once $_SERVER['DOCUMENT_ROOT']."/PHP/DBEntity/DBSQLResult.php";
+include_once $_SERVER['DOCUMENT_ROOT']."/PHP/Database/DBFetchController.php";
+include_once $_SERVER['DOCUMENT_ROOT']."/PHP/Database/DBInsertController.php";
+include_once $_SERVER['DOCUMENT_ROOT']."/PHP/Database/DBUpdateController.php";
+include_once $_SERVER['DOCUMENT_ROOT']."/PHP/Database/DBRemoveController.php";
+include_once $_SERVER['DOCUMENT_ROOT']."/PHP/Database/DBArchivateController.php";
+include_once $_SERVER['DOCUMENT_ROOT']."/PHP/Base/Environment.php";
+include_once $_SERVER['DOCUMENT_ROOT']."/PHP/Base/Log.php";
 
 class DBController 
 {

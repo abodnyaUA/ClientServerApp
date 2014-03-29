@@ -1,6 +1,6 @@
 <?php
 
-include_once "../Configurator/DBConfigurator.php";
+include_once $_SERVER['DOCUMENT_ROOT']."/PHP/Configurator/DBConfigurator.php";
 
 class DBConnectionsConfigurator 
 {
