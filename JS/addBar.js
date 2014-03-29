@@ -46,19 +46,6 @@ function hideBar()
 	document.getElementById("content").style.left = "0.5em";
 }
 
-/* Clear left-side "New model" panel */
-function clearBar()
-{
-	var array = document.getElementById("bar").childNodes;
-	for (var i = 0; i < array.length; i++) 
-	{
-		if (array[i].nodeName == "INPUT")
-		{
-			array[i].value = "";
-		}
-	};
-}
-
 function valueWithName(name)
 {
 	var parameter = document.getElementById(name).value;

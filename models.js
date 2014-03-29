@@ -60,6 +60,17 @@ function addLastModel()
  * "New model" panel 
  ********************/
 
+
+/* Clear left-side "New model" panel */
+function clearBar()
+{
+	document.getElementById("name").value = "";
+	document.getElementById("price").value = "";
+	document.getElementById("count").value = "";
+	document.getElementById("archived_yes").checked = "";
+	document.getElementById("archived_no").checked = "checked";
+}
+
 /* Event-handler "User did tap on 'Add' button in 'New Model' panel" */
 function didTapAddButton()
 {
