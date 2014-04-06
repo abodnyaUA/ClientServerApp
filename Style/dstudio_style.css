@@ -1,0 +1,168 @@
+body {
+	margin-left: 15%;
+	margin-right: 15%;
+	/*width: 1000px;*/
+	min-width: 500px;
+	background-color: rgb(216,238,255);
+}
+@font-face{
+	font-family: DejaVuSansBold;
+	src: local("DejaVuSansBold"), url('/Fonts/HelveticaNeueCE75Bold.ttf') format("truetype");
+}
+@font-face{
+	font-family: DejaVuSans;
+	src: local("DejaVuSans"), url('/Fonts/HelveticaNeueCE35Thin.ttf') format("truetype");
+}
+img
+{
+	border-width: 0px;
+}
+a
+{
+	text-decoration: none; /*убираем подчеркивание в ссылках */
+}
+
+/*  HEAD  */
+div.head
+{
+	background-color: rgb(17,134,224);
+	height: 105px;
+	font-size: 15pt;
+	font-weight: bold;
+}
+div.logo
+{
+	padding-top: 10px;
+	padding-left: 43%;
+	padding-bottom: 7px;
+}
+div.logotext
+{
+	text-align: center;
+	color: rgb(187,224,253);
+}
+/*  CONTENT  */
+div.content
+{
+	background-color: rgb(187,224,253);
+	padding-bottom: 15px;
+}
+div.menuElement
+{
+	text-align: center;
+	font-weight: bold;
+	font-family: DejaVuSans;
+	color: rgb(61,61,217);
+    display: inline-block; /* Строчно-блочный элемент */
+    padding-top: 0px;
+    vertical-align: top;
+}
+div.logoElement
+{
+	margin-left: 20px;
+	text-align: center;
+	font-weight: bold;
+	font-family: DejaVuSans;
+	color: rgb(61,61,217);
+    display: inline-block; /* Строчно-блочный элемент */
+    padding-top: 0px;
+    vertical-align: top;
+}
+
+div.menu
+{
+	margin-left: 15px;
+	margin-right: 15px;
+}
+
+img.menuElement
+{
+	width:100%;
+	max-width: 200px;
+}
+table
+{
+	width: 100%;
+}
+td 
+{
+	text-align: center;
+	padding: 5px;
+}
+span.productTitle
+{
+	font-size: 12pt;
+}
+div.description
+{
+    display: inline-block; /* Строчно-блочный элемент */
+    padding-left: 10px;
+    padding-right: 10px;
+    max-width: 700px;
+    min-width: 250px;
+}
+h2
+{
+	color: rgb(61,61,217);
+	font-weight: bold;
+	font-family: DejaVuSansBold;	
+}
+div.companyDescription
+{
+	text-align: center;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+h3, h4
+{
+  	text-align: left;
+	color: rgb(61,61,217);
+	font-weight: bold;
+	font-family: DejaVuSansBold;	
+}
+span.simpleText
+{
+	color: rgb(17,34,224);	
+	font-family: DejaVuSans;
+}
+div.screenshot
+{
+    width: 225px;
+    padding-left: 2px;
+    padding-right: 2px;	
+    display: inline-block; /* Строчно-блочный элемент */
+}
+img.screenshot
+{
+    width: 225px;	
+}
+div.appStore
+{
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+/*  FOOTER  */
+div.footer
+{
+	background-color: rgb(17,134,224);
+	height: 35px;
+}
+div.bottomtext
+{
+	font-family: DejaVuSans;
+	text-align: center;
+	font-size: 11pt;
+	color: rgb(187,224,253);
+	padding-top: 10px;
+	padding-bottom: 5px;
+}
+
+div.error
+{
+	font-family: DejaVuSans;
+	text-align: center;
+	font-size: 19pt;
+	color: rgb(61,61,217);
+}
