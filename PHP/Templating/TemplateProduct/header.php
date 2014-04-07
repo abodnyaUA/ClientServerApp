@@ -29,7 +29,7 @@
 					<div class='menuElement'>
 						<a href='/?page=<?=$page->name?>'>
 							<span class='productTitle'>
-								<?= $page->title ?>
+								<?=$page->title?>
 							</span>
 						</a>
 					</div>
@@ -38,5 +38,4 @@
 			</tr>
 		</table>
 	</div>
-	<div id='productDescription'>
 

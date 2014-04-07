@@ -7,7 +7,8 @@ function host()
 
 function databaseName()
 {
-	return "db_management";
+	return "dStudioSite";
+// 	return "db_management";
 }
 
 ?>

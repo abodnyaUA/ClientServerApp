@@ -2,8 +2,8 @@
 
 include_once $_SERVER['DOCUMENT_ROOT']."/PHP/Database/DBController.php";
 include_once $_SERVER['DOCUMENT_ROOT']."/PHP/Templating/DBPage.php";
-include_once $_SERVER['DOCUMENT_ROOT']."/PHP/Templating/DBTemplateProduct.php";
-include_once $_SERVER['DOCUMENT_ROOT']."/PHP/Templating/DBTemplateError.php";
+include_once $_SERVER['DOCUMENT_ROOT']."/PHP/Templating/TemplateProduct/DBTemplateProduct.php";
+include_once $_SERVER['DOCUMENT_ROOT']."/PHP/Templating/TemplateError/DBTemplateError.php";
 
 class DBPageBuilder 
 {
@@ -110,7 +110,7 @@ class DBPageBuilder
 		if (null != $page)
 		{
 			$content .=	"<style>".$page->aditional_css."</style>";
-			$content .= "<script src='".$page->additional_js."'></script>";			
+			$content .= "<script>".$page->additional_js."</script>";			
 		}
 		$content .= "</head>";
 		
