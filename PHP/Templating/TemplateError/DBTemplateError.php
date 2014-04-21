@@ -4,8 +4,8 @@ class DBTemplateError
 {
 	public $css = array("/Style/dstudio_style.css");
 	public $js = array();
-	public $header;	
-	public $footer;
+	
+	public $content;
 	
 	public static function create($errorCode)
 	{
@@ -13,14 +13,9 @@ class DBTemplateError
 		$errorMessage = $template->errorMessage($errorCode);
 		
 		ob_start();
-		include_once $_SERVER['DOCUMENT_ROOT']."/PHP/Templating/TemplateError/header.php";
-		$template->header = ob_get_clean();
-		
-		ob_start();
-		include_once $_SERVER['DOCUMENT_ROOT']."/PHP/Templating/TemplateError/footer.php";
-		$template->footer = ob_get_clean();
-		
-		return $template;
+		include_once $_SERVER['DOCUMENT_ROOT']."/PHP/Templating/TemplateError/content.php";
+		$template->content = ob_get_clean();
+		return $template;		
 	}
 	
 	function errorMessage($error) 

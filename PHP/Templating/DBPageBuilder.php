@@ -1,9 +1,14 @@
 <?php
 
+ini_set('display_errors',1);
+error_reporting(E_ALL);
+
 include_once $_SERVER['DOCUMENT_ROOT']."/PHP/Database/DBController.php";
 include_once $_SERVER['DOCUMENT_ROOT']."/PHP/Templating/DBPage.php";
 include_once $_SERVER['DOCUMENT_ROOT']."/PHP/Templating/TemplateProduct/DBTemplateProduct.php";
 include_once $_SERVER['DOCUMENT_ROOT']."/PHP/Templating/TemplateError/DBTemplateError.php";
+include_once $_SERVER['DOCUMENT_ROOT']."/PHP/Templating/TemplateCatalog/DBTemplateCatalog.php";
+include_once $_SERVER['DOCUMENT_ROOT']."/PHP/Templating/System/DBSystem.php";
 
 class DBPageBuilder 
 {
@@ -39,8 +44,7 @@ class DBPageBuilder
 	
 	public function defaultPage()
 	{
-		$template = DBTemplateProduct::create();
-		return $this->buildPage(null, $template);
+		return $this->pageContent("products");
 	}
 	
 	public function notFoundPage()
@@ -57,6 +61,7 @@ class DBPageBuilder
 		if (count($pages) != 0)
 		{
 			$page = $pages[0];
+			$page->content = str_replace("\n", "<br>", $page->content);
 			return $page;
 		}
 		else
@@ -67,7 +72,6 @@ class DBPageBuilder
 	
 	private function template($templateID)
 	{
-			
 		$sql = SQL("select * from `dStudioSite`.`Template`
 			where `Template`.`templateID` = :templateID",
 			array ("templateID" => $templateID));
@@ -76,7 +80,7 @@ class DBPageBuilder
 		{
 			$template = $templates[0];
 			$templateClass = $template["templateClass"];
-			$templateInstance = $templateClass::create();
+			$templateInstance = new $templateClass();
 			return $templateInstance;
 		}
 		else
@@ -115,12 +119,13 @@ class DBPageBuilder
 		$content .= "</head>";
 		
 		$content .= "<body>";
-		$content .= $template->header;
+		$content .= DBSystem::header();
+		$content .= DBSystem::menu($page);
 		if (null != $page)
 		{
-			$content .= $template->adaptedPageContent($page);
+			$content .= $template->content($page);
 		}
-		$content .= $template->footer;
+		$content .= DBSystem::footer();
 		$content .= "</body> </html>";
 		return $content;
 	}

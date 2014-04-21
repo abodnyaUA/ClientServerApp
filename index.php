@@ -1,6 +1,4 @@
 <?php
-// ob_start();
-
 include_once $_SERVER['DOCUMENT_ROOT']."/PHP/Templating/DBPageBuilder.php";
 
 $pageName = $_GET["page"];
@@ -15,6 +13,4 @@ else
 	$content = DBPageBuilder::sharedBuilder()->defaultPage();
 }
 echo $content;
-
-// ob_end_flush();
 ?>

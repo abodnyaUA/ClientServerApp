@@ -6,12 +6,12 @@ body {
 	background-color: rgb(216,238,255);
 }
 @font-face{
-	font-family: DejaVuSansBold;
-	src: local("DejaVuSansBold"), url('/Fonts/HelveticaNeueCE75Bold.ttf') format("truetype");
+	font-family: HelveticaNeueBold;
+	src: local("HelveticaNeueBold"), url('/Fonts/HelveticaNeueCE75Bold.ttf') format("truetype");
 }
 @font-face{
-	font-family: DejaVuSans;
-	src: local("DejaVuSans"), url('/Fonts/HelveticaNeueCE35Thin.ttf') format("truetype");
+	font-family: HelveticaNeue;
+	src: local("HelveticaNeue"), url('/Fonts/HelveticaNeueCE35Thin.ttf') format("truetype");
 }
 img
 {
@@ -46,12 +46,13 @@ div.content
 {
 	background-color: rgb(187,224,253);
 	padding-bottom: 15px;
+	padding-top: 20px;
 }
 div.menuElement
 {
 	text-align: center;
 	font-weight: bold;
-	font-family: DejaVuSans;
+	font-family: HelveticaNeue;
 	color: rgb(61,61,217);
     display: inline-block; /* Строчно-блочный элемент */
     padding-top: 0px;
@@ -62,23 +63,56 @@ div.logoElement
 	margin-left: 20px;
 	text-align: center;
 	font-weight: bold;
-	font-family: DejaVuSans;
+	font-family: HelveticaNeue;
 	color: rgb(61,61,217);
     display: inline-block; /* Строчно-блочный элемент */
     padding-top: 0px;
     vertical-align: top;
 }
 
+div.separateLine
+{
+	margin-top: 1px;
+}
+
 div.menu
+{
+	background-color: rgb(17,134,224);
+	text-align: center;
+	font-family: HelveticaNeue;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	color: white;
+}
+
+a.menuLink
+{
+	color: white;
+}
+
+span.menuSelectedEntry
+{
+	font-weight: bold;		
+}
+
+span.separator
+{
+	margin-left: 5px;
+	margin-right: 5px;
+	font-weight: bold;	
+}
+
+div.catalog
 {
 	margin-left: 15px;
 	margin-right: 15px;
+	font-family: HelveticaNeue;
 }
 
-img.menuElement
+img.catalogElement
 {
 	width:100%;
-	max-width: 200px;
+	max-width: 150px;
 }
 table
 {
@@ -105,7 +139,7 @@ h2
 {
 	color: rgb(61,61,217);
 	font-weight: bold;
-	font-family: DejaVuSansBold;	
+	font-family: HelveticaNeueBold;	
 }
 div.companyDescription
 {
@@ -119,12 +153,12 @@ h3, h4
   	text-align: left;
 	color: rgb(61,61,217);
 	font-weight: bold;
-	font-family: DejaVuSansBold;	
+	font-family: HelveticaNeueBold;	
 }
 span.simpleText
 {
 	color: rgb(17,34,224);	
-	font-family: DejaVuSans;
+	font-family: HelveticaNeue;
 }
 div.screenshot
 {
@@ -151,7 +185,7 @@ div.footer
 }
 div.bottomtext
 {
-	font-family: DejaVuSans;
+	font-family: HelveticaNeue;
 	text-align: center;
 	font-size: 11pt;
 	color: rgb(187,224,253);
@@ -161,7 +195,7 @@ div.bottomtext
 
 div.error
 {
-	font-family: DejaVuSans;
+	font-family: HelveticaNeue;
 	text-align: center;
 	font-size: 19pt;
 	color: rgb(61,61,217);

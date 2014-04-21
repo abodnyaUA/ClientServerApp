@@ -2,7 +2,7 @@
 
 include_once $_SERVER['DOCUMENT_ROOT']."/PHP/DBEntity/DBModel.php";
 include_once $_SERVER['DOCUMENT_ROOT']."/PHP/DBEntity/DBReciever.php";
-include_once $_SERVER['DOCUMENT_ROOT']."/PHP/DBEntity/DBOrder.php.php";
+include_once $_SERVER['DOCUMENT_ROOT']."/PHP/DBEntity/DBOrder.php";
 include_once $_SERVER['DOCUMENT_ROOT']."/PHP/Database/DBController.php";
 
 class DBFetchController 

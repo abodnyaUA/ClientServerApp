@@ -8,6 +8,3 @@
 		Competence and experience are our primary assets
 	</div>
 </div>
-<br>
-<div class='error'>
-	<?= $errorMessage ?>
